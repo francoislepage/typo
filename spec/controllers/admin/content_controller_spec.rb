@@ -544,6 +544,11 @@ describe Admin::ContentController do
         Article.should_not be_exists({:id => draft.id})
         Article.should_not be_exists({:id => draft_2.id})
       end
+
+      it 'should display the merge articles field' do
+        get :edit, 'id' => @article.id
+        response.should contain(/Merge Articles/)
+      end
     end
 
     describe 'resource_add action' do
