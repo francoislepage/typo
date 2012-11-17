@@ -43,10 +43,10 @@ Given /^the blog is set up$/ do
                 :state => 'active'})
 end
 
-And /^I am logged into the admin panel$/ do
+And /^I am logged into the admin panel as \"(.+)\" identified by \"(.+)\"$/ do |login, password|
   visit '/accounts/login'
-  fill_in 'user_login', :with => 'admin'
-  fill_in 'user_password', :with => 'aaaaaaaa'
+  fill_in 'user_login', :with => login
+  fill_in 'user_password', :with => password
   click_button 'Login'
   if page.respond_to? :should
     page.should have_content('Login successful')
@@ -275,4 +275,8 @@ end
 
 Then /^show me the page$/ do
   save_and_open_page
+end
+
+Given /^PENDING/ do
+  pending
 end
