@@ -545,10 +545,29 @@ describe Admin::ContentController do
         Article.should_not be_exists({:id => draft_2.id})
       end
 
-      it 'should display the merge articles field' do
+      it 'should display the merge articles section' do
         get :edit, 'id' => @article.id
         response.should contain(/Merge Articles/)
       end
+
+      it 'it should call merge_with on the model' do
+        article1 = @article
+        article2 = Factory(:article)
+
+        article1.should_receive(:merge_with).with(article2.id)
+        
+        post :merge_with, 'id' => @article.id, 'merge_with_id' => article2.id
+      end
+
+      it 'should redirect to the list of articles after the merge' do
+        article1 = @article
+        article2 = Factory(:article)
+        post :merge_with, 'id' => article1.id, 'merge_with_id' => article2.id
+
+        response.should redirect_to(:action => 'index')
+        assert_response :redirect
+      end
+
     end
 
     describe 'resource_add action' do

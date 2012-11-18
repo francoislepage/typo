@@ -151,8 +151,8 @@
   <div class='separator'>
     <h4>Merge Articles</h4>
     <%= form_tag("/admin/content/merge_with", :method=>"post") do %>
-    <%= label_tag(:merge_with_id, "Article ID") %>
-    <%= text_field_tag(:merge_with_id) %>
+    <%= label_tag(:merge_with, "Article ID") %>
+    <%= text_field_tag(:merge_with) %>
     <%= submit_tag("Merge") %>
     <% end %>
   </div>

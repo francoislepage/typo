@@ -16,11 +16,15 @@ Feature: Merge Articles
     | 2          | My Ferrari         | Ferrari rock    |
     
   Scenario: An admin can merge articles
-    When I am logged into the admin panel as "admin" identified by "aaaaaaaa"
+    Given I am logged into the admin panel as "admin" identified by "aaaaaaaa"
     And I am on the edit article page for "About Mercedes"
-    Then I should see "Merge Articles"
+    When I fill in "merge_with" with "the article id of My Ferrari" 
+    And I press "Merge"
+    Then I should not see "About Mercedes"
+    And I should see "My Ferrari"
+    And I should see "Aricle was merged successfully"
 
-  Scenario: A non-admin cannot merge articles
+    Scenario: A non-admin cannot merge articles
     When I am on the edit article page
     Then I should not see "Merge Articles"
 

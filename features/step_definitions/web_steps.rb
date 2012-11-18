@@ -82,6 +82,11 @@ When /^(?:|I )follow "([^"]*)"$/ do |link|
 end
 
 When /^(?:|I )fill in "([^"]*)" with "([^"]*)"$/ do |field, value|
+  case value
+    when /the article id of (.+)/
+      value = Article.find_by_title($1).id
+  else
+  end   
   fill_in(field, :with => value)
 end
 
