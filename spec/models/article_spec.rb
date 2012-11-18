@@ -633,8 +633,8 @@ describe Article do
 
   describe "merge_with" do
     before(:each) do  
-      @article1 = Article.new(:title => "title1", :body => "body1", :user=>"user1", :published => true)
-      @article2 = Article.new(:title => "title2", :body => "body2", :user=>"user2", :published => true)
+      @article1 = Article.new(:title => "title1", :body => "body1", :user=>Factory(:user, :login => 'user1'), :published => true)
+      @article2 = Article.new(:title => "title2", :body => "body2", :user=>Factory(:user, :login => 'user2'), :published => true)
       @merged_article = @article1.merge_with(@article2.id)
     end
 
