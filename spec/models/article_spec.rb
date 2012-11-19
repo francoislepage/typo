@@ -633,20 +633,27 @@ describe Article do
 
   describe "merge_with" do
     before(:each) do  
-      @article1 = Article.new(:title => "title1", :body => "body1", :user=>Factory(:user, :login => 'user1'), :published => true)
-      @article2 = Article.new(:title => "title2", :body => "body2", :user=>Factory(:user, :login => 'user2'), :published => true)
+      @article1 = Article.create!(:title => "title1", :body => "body1", :user=>Factory(:user, :login => 'user1'), :published => true)
+      @article2 = Article.create!(:title => "title2", :body => "body2", :user=>Factory(:user, :login => 'user2'), :published => true)
+    end
+
+    it "should return an article object on success" do
       @merged_article = @article1.merge_with(@article2.id)
+      @merged_article.should be_an(Article)
     end
 
     it "should select the title of the merged_with article" do
-      @merged_article.title.should eq(article2.title)
+      @merged_article = @article1.merge_with(@article2.id)
+      @merged_article.title.should eq(@article2.title)
     end
 
     it "should select the user of the merged_with article" do
-      @merged_article.user.should eq(article2.user)
+      @merged_article = @article1.merge_with(@article2.id)
+      @merged_article.user.should eq(@article2.user)
     end
 
     it "should merge the body of both articles" do
+      @merged_article = @article1.merge_with(@article2.id)
       @merged_article.body.should match(@article1.body)
       @merged_article.body.should match(@article2.body)
     end

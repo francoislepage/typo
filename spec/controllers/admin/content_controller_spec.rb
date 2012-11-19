@@ -550,28 +550,28 @@ describe Admin::ContentController do
         response.should contain(/Merge Articles/)
       end
 
-      it 'it should call merge_with on the model' do
+      it 'it should call merge_with on article instance to be merged' do
         article1 = @article
         article2 = Factory(:article)
-
+        
+        Article.stub(:find).and_return(article1)
+        
         article1.should_receive(:merge_with).with(article2.id)
         
-        post :merge_with, 'id' => @article.id, 'merge_with_id' => article2.id
+        post :merge_with, 'id' => article1.id, 'merge_with' => article2.id
       end
 
       it 'should redirect to the list of articles after the merge' do
         article1 = @article
         article2 = Factory(:article)
-        post :merge_with, 'id' => article1.id, 'merge_with_id' => article2.id
+        post :merge_with, 'id' => article1.id, 'merge_with' => article2.id
 
         response.should redirect_to(:action => 'index')
         assert_response :redirect
       end
-
     end
 
     describe 'resource_add action' do
-
       it 'should add resource' do
         art_id = @article.id
         resource = Factory(:resource)
@@ -585,7 +585,6 @@ describe Admin::ContentController do
         assert_not_nil assigns(:resource)
         assert_not_nil assigns(:resources)
       end
-
     end
 
     describe 'resource_remove action' do

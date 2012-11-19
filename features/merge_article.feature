@@ -22,7 +22,7 @@ Feature: Merge Articles
     And I press "Merge"
     Then I should not see "About Mercedes"
     And I should see "My Ferrari"
-    And I should see "Aricle was merged successfully"
+    And I should see "The article was merged successfully"
 
     Scenario: A non-admin cannot merge articles
     When I am on the edit article page
