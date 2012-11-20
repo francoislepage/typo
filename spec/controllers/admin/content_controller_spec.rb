@@ -555,7 +555,7 @@ describe Admin::ContentController do
         article2 = Factory(:article)
         
         Article.stub(:find).and_return(article1)
-        
+                
         article1.should_receive(:merge_with).with(article2.id)
         
         post :merge_with, 'id' => article1.id, 'merge_with' => article2.id
