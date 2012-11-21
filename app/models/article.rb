@@ -417,12 +417,10 @@ class Article < Content
   end
 
   def merge_with(merge_with_article_id)
-    article_to_merge_with_found = Article.find_by_id(merge_with_article_id)
-
-    if article_to_merge_with_found
-      merged_article = article_to_merge_with_found.dup
-      merged_article.body += self.body
-      merged_article
+    if article_to_merge_with = Article.find_by_id(merge_with_article_id)
+      article_to_merge_with.body += self.body
+      self.destroy
+      article_to_merge_with
     else
       nil
     end

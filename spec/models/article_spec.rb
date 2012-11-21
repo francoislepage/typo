@@ -658,13 +658,11 @@ describe Article do
       @merged_article.body.should match(@article2.body)
     end
 
-    it "should add an article to the database" do
-      pending
-    end
-
-    it 'should delete the two original articles' do
-      pending
-    end
+    it "should delete the merged article from the database" do
+      expect {
+      @merged_article = @article1.merge_with(@article2.id)
+      }.to change(Article, :count).by(-1)
+     end
   end
 end
 
